@@ -1,0 +1,55 @@
+# config.nu
+#
+# Installed by:
+# version = "0.102.0"
+#
+# This file is used to override default Nushell settings, define
+# (or import) custom commands, or run any other startup tasks.
+# See https://www.nushell.sh/book/configuration.html
+#
+# This file is loaded after env.nu and before login.nu
+#
+# You can open this file in your default editor using:
+# config nu
+#
+# See `help config nu` for more options
+#
+# You can remove these comments if you want or leave
+# them for future reference.
+$env.config.show_banner = false
+$env.config.shell_integration.osc133 = false
+$env.config.hooks.env_change = {
+    PWD: [{ ||
+        if (which direnv | is-empty) {
+        return
+        }
+
+        let out = direnv export json | complete
+        
+        $out | get stdout | from json | default {} | load-env
+        if 'ENV_CONVERSIONS' in $env and 'PATH' in $env.ENV_CONVERSIONS {
+            $env.PATH = do $env.ENV_CONVERSIONS.PATH.from_string $env.PATH
+        }
+    }]
+}
+#$env.config.hooks.command_not_found = {|cmd| 
+#    let cmd = (history | get command | last)
+#    
+#    if (which pwsh | is-empty) {
+#        return
+#    }
+#
+#    pwsh -c $cmd
+#}
+
+let autoload = $nu.data-dir | path join "vendor/autoload"
+mkdir $autoload
+
+^starship init nu | save -f ($autoload | path join "starship.nu")
+^zoxide init nushell | save -f ($autoload | path join "zoxide.nu")
+^carapace _carapace nushell | save -f ($autoload | path join "carapace.nu")
+#^mise activate nu | save -f ($autoload | path join "mise.nu")
+
+use themes/ayu.nu
+ayu set color_config
+ayu update terminal
