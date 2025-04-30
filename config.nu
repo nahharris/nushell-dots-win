@@ -18,6 +18,7 @@
 # them for future reference.
 $env.config.show_banner = false
 $env.config.shell_integration.osc133 = false
+$env.config.table.missing_value_symbol = " ∅ "
 $env.config.hooks.env_change = {
     PWD: [{ ||
         if (which direnv | is-empty) {
