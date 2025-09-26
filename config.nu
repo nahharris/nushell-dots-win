@@ -33,23 +33,13 @@ $env.config.hooks.env_change = {
         }
     }]
 }
-#$env.config.hooks.command_not_found = {|cmd| 
-#    let cmd = (history | get command | last)
-#    
-#    if (which pwsh | is-empty) {
-#        return
-#    }
-#
-#    pwsh -c $cmd
-#}
-
 let autoload = $nu.data-dir | path join "vendor/autoload"
 mkdir $autoload
 
 ^starship init nu | save -f ($autoload | path join "starship.nu")
 ^zoxide init nushell | save -f ($autoload | path join "zoxide.nu")
 ^carapace _carapace nushell | save -f ($autoload | path join "carapace.nu")
-#^mise activate nu | save -f ($autoload | path join "mise.nu")
+^mise activate nu | save -f ($autoload | path join "mise.nu")
 
 use themes/ayu.nu
 ayu set color_config

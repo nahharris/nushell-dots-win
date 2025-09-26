@@ -1,5 +1,5 @@
 # Commandline File Explorer with CD support in Nushell
-def --env yy [...args] {
+def --env y [...args] {
 	let tmp = (mktemp -t "yazi-cwd.XXXXXX")
 	yazi ...$args --cwd-file $tmp
 	let cwd = (open $tmp)
@@ -139,7 +139,7 @@ def "apt find" [
 def "nu-complete webtty shells" [] {
     open /etc/shells
     | lines
-    | filter {|l| not ($l | str trim | str starts-with '#') }
+    | where {|l| not ($l | str trim | str starts-with '#') }
 }
 
 # Launches a webclient for a local shell
@@ -233,7 +233,7 @@ def "nu-complete gldr list" [] {
 def gldr [
     ...page: string@"nu-complete gldr list"
 ] {
-    tldr ($page | str join "-") --raw | glow
+    tldr ($page | str join "-") --raw | glow -p
 }
 
 def "pkg search" [
@@ -255,7 +255,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -268,7 +268,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -281,7 +281,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -294,7 +294,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -307,7 +307,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -320,7 +320,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -333,7 +333,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -346,7 +346,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
@@ -359,7 +359,7 @@ def "pkg details" [
         | lines
         | each {|line| $line | split row ',' }
         | flatten
-        | filter {|line| not ($line | is-empty ) }
+        | where {|line| not ($line | is-empty ) }
         | each {|item| $item | str trim }
     } else {
         []
