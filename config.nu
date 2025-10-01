@@ -41,6 +41,10 @@ mkdir $autoload
 ^carapace _carapace nushell | save -f ($autoload | path join "carapace.nu")
 ^mise activate nu | save -f ($autoload | path join "mise.nu")
 
+if (not ($"($env.HOME)/.config/starship.toml" | path exists )) {
+    cp ($nu.data-dir | path join "vendor/starship.toml") $"($env.HOME)/.config/starship.toml"
+}
+
 use themes/ayu.nu
 ayu set color_config
 ayu update terminal
